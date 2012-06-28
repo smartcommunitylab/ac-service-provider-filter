@@ -1,18 +1,8 @@
 package eu.trentorise.smartcampus.ac.provider.filters;
 
-import eu.trentorise.smartcampus.ac.provider.AcProviderService;
-import eu.trentorise.smartcampus.ac.provider.model.User;
-import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
-import javax.xml.bind.JAXBException;
-import org.apache.cxf.endpoint.Client;
-import org.apache.cxf.frontend.ClientProxy;
-import org.apache.cxf.jaxws.JaxWsProxyFactoryBean;
-import org.apache.cxf.transport.http.HTTPConduit;
-import org.apache.cxf.transports.http.configuration.HTTPClientPolicy;
-import org.springframework.beans.factory.annotation.Value;
+
 import org.springframework.security.web.authentication.preauth.AbstractPreAuthenticatedProcessingFilter;
-import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
 /**
@@ -23,7 +13,9 @@ import org.springframework.util.Assert;
 //@Component(value="acProviderFilter")
 public class AcProviderFilter extends AbstractPreAuthenticatedProcessingFilter {
 
-    String principalRequestHeader = "AUTH_TOKEN";
+	public static final String TOKEN_HEADER = "AUTH_TOKEN";
+	
+    String principalRequestHeader = TOKEN_HEADER;
 
     @Override
     protected Object getPreAuthenticatedPrincipal(HttpServletRequest request) {
