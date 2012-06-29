@@ -9,12 +9,14 @@ import org.apache.cxf.jaxws.JaxWsProxyFactoryBean;
 import org.apache.cxf.transport.http.HTTPConduit;
 import org.apache.cxf.transports.http.configuration.HTTPClientPolicy;
 import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
 
 import eu.trentorise.smartcampus.ac.provider.AcProviderService;
+import eu.trentorise.smartcampus.ac.provider.AcServiceException;
 
 /**
  * 
@@ -50,12 +52,18 @@ public class SpringAcProvider implements AuthenticationProvider {
 	public Authentication authenticate(Authentication authentication)
 			throws AuthenticationException {
 		String token = authentication.getPrincipal().toString();
-		if (!service.isValidUser(token)) {
-			throw new BadCredentialsException(
-					"Authentication token is absent or expired");
+		try {
+			boolean valid = service.isValidUser(token);
+			if (!valid) {
+				throw new BadCredentialsException(
+						"Authentication token is absent or expired");
+			}
+			authentication.setAuthenticated(true);
+			return authentication;
+		} catch (AcServiceException e) {
+			throw new AuthenticationServiceException("Problem accessing AC provider service: "+e.getMessage());
 		}
-		authentication.setAuthenticated(true);
-		return authentication;
+		
 	}
 
 	@Override
