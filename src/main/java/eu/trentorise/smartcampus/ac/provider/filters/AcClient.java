@@ -55,14 +55,15 @@ public class AcClient implements AcService {
 		}
 		return service;
 	}
-	
+
 	@Override
 	public User getUserByToken(String authToken) throws AcServiceException {
 		return getService().getUserByToken(authToken);
 	}
 
 	@Override
-	public List<User> getUsersByAttributes(List<Attribute> attributes) throws AcServiceException {
+	public List<User> getUsersByAttributes(List<Attribute> attributes)
+			throws AcServiceException {
 		return getService().getUsersByAttributes(attributes);
 	}
 
@@ -88,6 +89,13 @@ public class AcClient implements AcService {
 		} catch (JAXBException e) {
 			throw new AcServiceException();
 		}
+	}
+
+	@Override
+	public void setAttribute(long userId, Attribute attribute)
+			throws AcServiceException {
+		getService().setAttribute(userId, attribute);
+
 	}
 
 }
