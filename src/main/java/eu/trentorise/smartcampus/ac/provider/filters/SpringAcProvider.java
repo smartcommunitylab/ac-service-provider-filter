@@ -29,7 +29,13 @@ public class SpringAcProvider implements AuthenticationProvider {
 	private String endpointUrl;
 	private AcProviderService service;
 
-	@PostConstruct
+	
+	public SpringAcProvider(String endpointUrl) throws JAXBException {
+		super();
+		this.endpointUrl = endpointUrl;
+		init();
+	}
+
 	private void init() throws JAXBException {
 		JaxWsProxyFactoryBean factory = new JaxWsProxyFactoryBean();
 		factory.setServiceClass(AcProviderService.class);
