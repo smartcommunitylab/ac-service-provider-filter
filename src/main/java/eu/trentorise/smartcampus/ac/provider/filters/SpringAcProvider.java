@@ -1,6 +1,5 @@
 package eu.trentorise.smartcampus.ac.provider.filters;
 
-import javax.annotation.PostConstruct;
 import javax.xml.bind.JAXBException;
 
 import org.apache.cxf.endpoint.Client;
@@ -25,11 +24,9 @@ import eu.trentorise.smartcampus.ac.provider.AcServiceException;
  */
 public class SpringAcProvider implements AuthenticationProvider {
 
-	// @Value("${ac.endpoint.url}")
 	private String endpointUrl;
 	private AcProviderService service;
 
-	
 	public SpringAcProvider(String endpointUrl) throws JAXBException {
 		super();
 		this.endpointUrl = endpointUrl;
@@ -67,9 +64,10 @@ public class SpringAcProvider implements AuthenticationProvider {
 			authentication.setAuthenticated(true);
 			return authentication;
 		} catch (AcServiceException e) {
-			throw new AuthenticationServiceException("Problem accessing AC provider service: "+e.getMessage());
+			throw new AuthenticationServiceException(
+					"Problem accessing AC provider service: " + e.getMessage());
 		}
-		
+
 	}
 
 	@Override

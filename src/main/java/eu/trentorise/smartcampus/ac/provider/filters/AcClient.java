@@ -23,7 +23,6 @@ import eu.trentorise.smartcampus.ac.provider.model.User;
  */
 public class AcClient implements AcService {
 
-	// @Value("${ac.endpoint.url}")
 	private String endpointUrl;
 	private AcProviderService service;
 
