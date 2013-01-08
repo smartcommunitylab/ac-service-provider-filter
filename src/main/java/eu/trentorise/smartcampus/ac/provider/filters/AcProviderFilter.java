@@ -6,6 +6,7 @@ import org.springframework.security.web.authentication.preauth.AbstractPreAuthen
 import org.springframework.util.Assert;
 
 /**
+ * Filter of pre-authentication
  * 
  * @author Viktor Pravdin <pravdin@disi.unitn.it>
  * @date Jun 4, 2012 3:22:53 PM

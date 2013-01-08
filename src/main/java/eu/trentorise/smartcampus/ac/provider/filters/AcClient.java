@@ -17,6 +17,7 @@ import eu.trentorise.smartcampus.ac.provider.model.Attribute;
 import eu.trentorise.smartcampus.ac.provider.model.User;
 
 /**
+ * Implementation of AcService interface
  * 
  * @author Viktor Pravdin <pravdin@disi.unitn.it>
  * @date Jun 5, 2012 2:36:31 PM

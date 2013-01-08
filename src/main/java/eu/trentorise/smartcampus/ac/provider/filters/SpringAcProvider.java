@@ -18,6 +18,7 @@ import eu.trentorise.smartcampus.ac.provider.AcProviderService;
 import eu.trentorise.smartcampus.ac.provider.AcServiceException;
 
 /**
+ * Filter to check authentication of user in web application
  * 
  * @author Viktor Pravdin <pravdin@disi.unitn.it>
  * @date Jun 5, 2012 2:36:31 PM
@@ -51,6 +52,15 @@ public class SpringAcProvider implements AuthenticationProvider {
 		}
 	}
 
+	/**
+	 * Checks if the authentication token is yet valid
+	 * 
+	 * @param authentication
+	 *            spring authentication object
+	 * @return the authentication object with authenticated flag setted true if
+	 *         authentication token is yet valid
+	 * @throws AuthenticationException
+	 */
 	@Override
 	public Authentication authenticate(Authentication authentication)
 			throws AuthenticationException {
