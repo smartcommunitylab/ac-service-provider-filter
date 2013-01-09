@@ -53,44 +53,6 @@
             <type>jar</type>
         </dependency>
     </dependencies>
-    <repositories>
-        <repository>
-            <id>sc-releases</id>
-            <name>Smartcampus releases repo</name>
-            <url>http://213.21.154.86/nexus/content/repositories/releases/</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository>
-        <repository>
-            <id>sc-snapshots</id>
-            <name>Smartcampus snapshots repo</name>
-            <url>http://213.21.154.86/nexus/content/repositories/snapshots/</url>
-            <releases>
-                <enabled>false</enabled>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </repository>
-    </repositories>
-
-    <distributionManagement>
-        <repository>
-            <id>sc-releases</id>
-            <name>Smartcampus releases repo</name>
-            <url>http://213.21.154.86/nexus/content/repositories/releases/</url>
-        </repository>
-        <snapshotRepository>
-            <id>sc-snapshots</id>
-            <name>Smartcampus snapshots repo</name>
-            <url>http://213.21.154.86/nexus/content/repositories/snapshots/</url>
-        </snapshotRepository>
-    </distributionManagement>
-
 
     <build>
         <plugins>
@@ -101,6 +63,20 @@
                 <configuration>
                     <source>1.6</source>
                     <target>1.6</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <inherited>false</inherited>
+                <groupId>com.mycila.maven-license-plugin</groupId>
+                <artifactId>maven-license-plugin</artifactId>
+                <version>1.8.0</version>
+                <configuration>
+                    <header>${basedir}/license/license.txt</header>
+                    <failIfMissing>true</failIfMissing>
+                    <aggregate>true</aggregate>
+                    <includes>
+                        <include>src/**</include>
+                    </includes>
                 </configuration>
             </plugin>
         </plugins>
