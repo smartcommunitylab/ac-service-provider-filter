@@ -78,12 +78,6 @@ public class AcClient implements AcService {
 	}
 
 	@Override
-	public List<User> getUsersByAttributes(List<Attribute> attributes)
-			throws AcServiceException {
-		return getService().getUsersByAttributes(attributes);
-	}
-
-	@Override
 	public boolean isValidUser(String authToken) throws AcServiceException {
 		return getService().isValidUser(authToken);
 	}
@@ -108,10 +102,9 @@ public class AcClient implements AcService {
 	}
 
 	@Override
-	public void setAttribute(long userId, Attribute attribute)
-			throws AcServiceException {
-		getService().setAttribute(userId, attribute);
-
+	public boolean canReadResource(String authToken, String resourceId) throws AcServiceException {
+		return getService().canReadResource(authToken, resourceId);
 	}
 
+	
 }
