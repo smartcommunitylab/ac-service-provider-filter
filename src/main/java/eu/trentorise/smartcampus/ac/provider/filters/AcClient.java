@@ -75,5 +75,11 @@ public class AcClient implements AcService {
 		return getClient().path("/resources/"+resourceId+"/access").header("AUTH_TOKEN", authToken).accept("application/xml").get(Boolean.class);
 	}
 
+	@Override
+	public boolean isAnonymousUser(String authToken) throws AcServiceException {
+		return getClient().path("/users/me/anonymous").header("AUTH_TOKEN", authToken).accept("application/xml").get(Boolean.class);
+	}
+
+	
 	
 }

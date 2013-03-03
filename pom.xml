@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>eu.trentorise.smartcampus</groupId>
 	<artifactId>ac-service-provider-filter</artifactId>
-	<version>1.0</version>
+	<version>1.1</version>
 	<packaging>jar</packaging>
 	<name>AC Service Provider PreAuth Filter</name>
 
@@ -16,7 +16,7 @@
 		<dependency>
 			<groupId>eu.trentorise.smartcampus</groupId>
 			<artifactId>ac-service-provider-api</artifactId>
-			<version>${project.version}</version>
+			<version>1.1</version>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
