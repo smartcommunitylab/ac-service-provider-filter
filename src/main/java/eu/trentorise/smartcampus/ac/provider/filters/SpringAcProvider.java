@@ -16,22 +16,16 @@
 
 package eu.trentorise.smartcampus.ac.provider.filters;
 
+import javax.ws.rs.WebApplicationException;
 import javax.xml.bind.JAXBException;
 
-import org.apache.cxf.endpoint.Client;
-import org.apache.cxf.frontend.ClientProxy;
-import org.apache.cxf.jaxws.JaxWsProxyFactoryBean;
-import org.apache.cxf.transport.http.HTTPConduit;
-import org.apache.cxf.transports.http.configuration.HTTPClientPolicy;
+import org.apache.cxf.jaxrs.client.WebClient;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
-
-import eu.trentorise.smartcampus.ac.provider.AcProviderService;
-import eu.trentorise.smartcampus.ac.provider.AcServiceException;
 
 /**
  * Filter to check authentication of user in web application
@@ -42,30 +36,10 @@ import eu.trentorise.smartcampus.ac.provider.AcServiceException;
 public class SpringAcProvider implements AuthenticationProvider {
 
 	private String endpointUrl;
-	private AcProviderService service;
 
 	public SpringAcProvider(String endpointUrl) throws JAXBException {
 		super();
 		this.endpointUrl = endpointUrl;
-		init();
-	}
-
-	private void init() throws JAXBException {
-		JaxWsProxyFactoryBean factory = new JaxWsProxyFactoryBean();
-		factory.setServiceClass(AcProviderService.class);
-		factory.setAddress(endpointUrl);
-
-		service = (AcProviderService) factory.create();
-
-		Client client = ClientProxy.getClient(service);
-		if (client != null) {
-			HTTPConduit conduit = (HTTPConduit) client.getConduit();
-			HTTPClientPolicy policy = new HTTPClientPolicy();
-			policy.setConnectionTimeout(10000);
-			policy.setReceiveTimeout(10000);
-			policy.setAllowChunking(false);
-			conduit.setClient(policy);
-		}
 	}
 
 	/**
@@ -82,14 +56,14 @@ public class SpringAcProvider implements AuthenticationProvider {
 			throws AuthenticationException {
 		String token = authentication.getPrincipal().toString();
 		try {
-			boolean valid = service.isValidUser(token);
+			boolean valid = WebClient.create(endpointUrl).path("/users/me/validity").header("AUTH_TOKEN", token).accept("application/json").get(Boolean.class);
 			if (!valid) {
 				throw new BadCredentialsException(
 						"Authentication token is absent or expired");
 			}
 			authentication.setAuthenticated(true);
 			return authentication;
-		} catch (AcServiceException e) {
+		} catch (WebApplicationException e) {
 			throw new AuthenticationServiceException(
 					"Problem accessing AC provider service: " + e.getMessage());
 		}
