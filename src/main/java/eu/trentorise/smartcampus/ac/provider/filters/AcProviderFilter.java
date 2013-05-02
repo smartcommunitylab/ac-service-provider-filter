@@ -31,6 +31,8 @@ public class AcProviderFilter extends AbstractPreAuthenticatedProcessingFilter {
 
 	public static final String TOKEN_HEADER = "AUTH_TOKEN";
 
+	public static final String APPTOKEN_HEADER = "APP_TOKEN";
+
 	String principalRequestHeader = TOKEN_HEADER;
 
 	@Override

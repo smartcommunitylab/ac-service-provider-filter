@@ -23,6 +23,7 @@ import org.apache.cxf.jaxrs.client.WebClient;
 
 import eu.trentorise.smartcampus.ac.provider.AcService;
 import eu.trentorise.smartcampus.ac.provider.AcServiceException;
+import eu.trentorise.smartcampus.ac.provider.model.App;
 import eu.trentorise.smartcampus.ac.provider.model.Attribute;
 import eu.trentorise.smartcampus.ac.provider.model.User;
 
@@ -78,6 +79,12 @@ public class AcClient implements AcService {
 	@Override
 	public boolean isAnonymousUser(String authToken) throws AcServiceException {
 		return getClient().path("/users/me/anonymous").header("AUTH_TOKEN", authToken).accept("application/xml").get(Boolean.class);
+	}
+
+	@Override
+	public App getAppByToken(String appToken) throws AcServiceException {
+		return getClient().path("/apps/me").header("APP_TOKEN", appToken).accept("application/xml").get(App.class);
+
 	}
 
 	
